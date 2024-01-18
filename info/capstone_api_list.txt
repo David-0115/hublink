@@ -1,0 +1,10 @@
+Capstone API's
+
+Hammer Commercial GPS
+https://www.hammerapp.com/integrate-us
+
+tommorrow.io Weather on a Route
+https://docs.tomorrow.io/reference/route-overview
+
+Google geocoding 
+https://developers.google.com/maps/documentation/geocoding/overview#:~:text=You%20can%20use%20the%20Geocoding,Geographic%20coordinates%20for%20addresses.
