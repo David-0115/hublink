@@ -1,0 +1,45 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Edit Profile
+{%endblock%}
+
+{%block content%}
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <div class="col-">
+        </div>
+        <div class="col-4 w-100">
+            <div class="hublink-form">
+                <div class="text-center form-header-div">
+                    <h3>Edit Profile:</h3>
+                </div>
+                <div class="w-100">
+                    <form method="POST" name="login_user_form" action="/editprofile/{{current_user.id}}" class="w-100">
+                        {{ form.hidden_tag() }}
+                        {% for field in form if field.widget.input_type != 'hidden' %}
+                        {% for error in field.errors%}
+                        <span class="text-danger">{{error}}</span>
+                        {%endfor%}
+
+                        <div class="container w-100 mt-2">
+                            {{field.label}}
+                            {{field}}
+                        </div>
+                        {%endfor%}
+                        <div class="container w-100 mt-4 mb-3 text-center">
+                            <button class="btn btn-success">Submit Changes</button>
+                        </div>
+                    </form>
+                    <div class="container w-100 mt-3 mb-3 text-center">
+                        <a href="/"><button class="btn btn-danger">Cancel</button></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-"></div>
+    </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,123 @@
+body {
+    background-color: #F5F7F7;
+}
+
+.logo1 {
+    background: rgb(6, 212, 161);
+    background: linear-gradient(180deg, rgba(6, 212, 161, 1) 0%, rgba(3, 155, 139, 1) 87%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-size: 24px;
+}
+
+.logo2 {
+    background-color: #001F39;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-size: 24px;
+}
+
+.nav1 {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: #001F39;
+    font-weight: bold;
+}
+
+
+
+#signin-form-div {
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border: 1px solid #c4c4bd;
+    border-radius: 4px 4px 4px 4px;
+
+}
+
+#logo-login {
+    width: 100%;
+}
+
+#role-select {
+    background-color: #0D6EFD;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: white;
+
+}
+
+.nav2 {
+    font-size: .8rem;
+}
+
+#map {
+    height: 400px;
+    border: 1px solid black;
+}
+
+#truck-settings {
+    font-size: 10px;
+}
+
+.form-header-div {
+    display: flex;
+    background-color: #0D6EFD;
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    color: white;
+    align-items: center;
+    justify-content: center;
+}
+
+h3.header {
+    padding: 0px;
+    margin: 0px;
+}
+
+.hublink-form {
+    background-color: #DFE2E3;
+    border: 1px solid black;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+
+}
+
+.hublink-nav {
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+    background-color: #0D6EFD;
+    box-sizing: border-box;
+    color: white;
+    border: 1px solid black;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.info-div {
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+td {
+    font-size: 14px;
+}

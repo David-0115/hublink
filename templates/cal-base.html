@@ -1,0 +1,53 @@
+{%extends 'base.html'%}
+
+{%block head%}
+
+
+<link rel="stylesheet" link="/static/css/cal.css">
+
+{%endblock%}
+
+{%block title%}
+Hublink Calendar
+{%endblock%}
+
+{%block toolbar%}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Unified Selects and Button Area -->
+        <div class="col-lg-2 col-md-12 order-lg-1 order-1">
+            <div class="d-flex flex-lg-column flex-md-row md-align-items-center justify-content-between">
+                <div class="mb-2">
+                    <label>Location:&nbsp;</label><br>
+                    <select class="ml-2" id="hub-select"></select>
+                </div>
+                <div class="mb-2">
+                    <label>Appointment View:&nbsp; </label><br>
+                    <select id="view-select">
+                        <option id="v1">Available</option>
+                        <option id="v2">Booked</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" id="cal-go-btn">Go</button>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="col-lg-8  col-md-12 order-lg-2 order-2">
+            {% block cal_content %}
+            <!-- Calendar content goes here -->
+            {% endblock %}
+        </div>
+        <div class="col-"></div>
+    </div>
+</div>
+
+
+
+{%endblock%}
+
+{%block content%}
+
+
+
+{%endblock%}

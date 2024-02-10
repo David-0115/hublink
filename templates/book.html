@@ -1,0 +1,97 @@
+{%extends 'base.html'%}
+{%block head%}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+{%endblock%}
+
+{%block title%}
+Book Appointment
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid" id="role-info" data-role="{{g.user.roles[0].name}}">
+    <div class="row d-flex d-lg-row d-md-column">
+        <div class="col-lg-4 md-col-md-">
+            <div class="container info-div">
+                <h4 class="text-center mb-3 header">Appointment Information:</h4>
+                <p class="mb-2">
+                    {%set loc_contact = slot.location.get_contact_info()%}
+                    <b id="loc1_id" data-loc1="{{slot.location.id}}"
+                        data-coords="{{loc_contact.latitude}}, {{loc_contact.longitude}}">Location:</b>
+                    {{slot.location.name}}<br>
+                    <b>Date:</b> {{slot.local_start_time() | show_dateformat('%B %d, %Y')}}<br>
+                    <b id="slot_id" data-slot="{{slot.id}}">Appointment Time:</b> {{slot.local_start_time() |
+                    show_timeformat()}} -
+                    {{slot.local_end_time() |
+                    show_timeformat()}}<br>
+                    <b>Address:</b> {{loc_contact.street_address}} {{loc_contact.city}}, {{loc_contact.state}}
+                    {{loc_contact.zip_code}}
+                </p>
+
+            </div>
+        </div>
+        <div class="col-lg-4 md-col-md">
+            <div class="container info-div">
+                <h4 class="text-center mb-3 header">Book Appointment</h4>
+                <form method="POST" id="book_form">
+                    {{ form.hidden_tag() }}
+                    {% for field in form if field.widget.input_type != 'hidden' %}
+                    {% for error in field.errors%}
+                    <span class="text-danger">{{error}}</span>
+                    {%endfor%}
+                    <div class="mb-2 apt-form">
+                        {{field.label}}
+                        {{field}}
+                    </div>
+                    {%endfor%}
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary btn-block, btn-lg">Book it!</button>
+                    </div>
+                </form>
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md- ">
+            <div class="container info-div" id="trip-info">
+                <h4 class="text-center mb-3 header">Trip Information:</h4>
+                <div class="w-100 text-center" id="load-msg">
+                    <small>Loads when destination is selected.</small>
+                </div>
+                <div id="map-origin-name" class="d-none">
+                    <span><b>Origin:&nbsp;</b></span><span class="ml-2">{{slot.location.name}}</span>
+                </div>
+                <div id="map-destination-name" class="d-none">
+                    <span><b>Destination:&nbsp;</b></span><span class="ml-2" id="map-dest"></span>
+                </div>
+                <div id="trip-miles" class="d-none">
+                    <span><b>Mileage:&nbsp;</b></span><span class="ml-2 " id="map-miles"></span>
+                </div>
+                <div id="travel-time" class="d-none">
+                    <span><b>Travel time:&nbsp;</b></span><span class="ml-2 " id="map-travel"></span>
+                </div>
+                <div id="map" class="d-none mt-2">
+                </div>
+                <div class="text-center w-100 d-none" id="bing-eula"><small>
+                        Truck route data provided by Microsoft &copy; <a
+                            href="https://www.microsoft.com/en-us/maps/bing-maps/product/enduserterms">Bing
+                            Maps.</a></small></div>
+                <div class="d-none" id="truck-settings">
+                    Truck route vehicle settings:
+                    <ul>
+                        <li>Vehicle: Single trailer Semi</li>
+                        <li>Height: 14ft</li>
+                        <li>Weight: 80,000lbs</li>
+                        <li>Length: 80ft</li>
+                        <li>Axles: 5</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="/static/js/book.js"></script>
+{%endblock%}

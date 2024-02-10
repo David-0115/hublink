@@ -1,0 +1,145 @@
+{%extends 'base.html'%}
+{%block head%}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+{%endblock%}
+
+{%block title%}
+Appointment Details
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid">
+    <div class="row d-flex d-lg-row d-md-column">
+        <div class="col-lg-4 md-col-md- ">
+            <div class="container info-div">
+                <h4 class="text-center mb-3 mt-2 header">Appointment Information:</h4>
+                <p class="mb-">
+                    {%set loc_contact = booking.appointment_slots.location.get_contact_info()%}
+                    <b id="loc1_id" data-loc1="{{booking.appointment_slots.location.id}}"
+                        data-coords="{{loc_contact.latitude}}, {{loc_contact.longitude}}">Location:</b>
+                    {{booking.appointment_slots.location.name}}<br>
+                    <b>Date:</b> {{booking.appointment_slots.local_start_time() | show_dateformat('%B %d, %Y')}}<br>
+                    <b id="slot_id" data-slot="{{booking.appointment_slots.id}}">Appointment Time:</b>
+                    {{booking.appointment_slots.local_start_time() |
+                    show_timeformat()}} -
+                    {{booking.appointment_slots.local_end_time() |
+                    show_timeformat()}}<br>
+                    <b>Address:</b> {{loc_contact.street_address}} {{loc_contact.city}}, {{loc_contact.state}}
+                    {{loc_contact.zip_code}}
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4 md-col-md-">
+            <div class="container info-div">
+                <h4 class="text-center mb-3 mt-2 header" id="bookId" data-bookId="{{booking.id}}">Booking Details:</h4>
+                <div>
+                    <span><b>Company:&nbsp;</b></span><span>{{booking.companies.name}}</span>
+                </div>
+                <div>
+                    <span><b>Driver:&nbsp;</b></span><span>{{booking.drivers.first_name}}
+                        {{booking.drivers.last_name}}</span>
+                </div>
+                <div>
+                    {%set dest = booking.delivery_name()%}
+                    <span><b>Destination:&nbsp;</b></span><span id="destId" data-loc2="{{dest.id if dest.id else 
+                        'DO'}}">{{dest.name if
+                        dest.name else dest}}</span>
+                </div>
+                <div>
+                    <span><b>Notes:&nbsp;</b></span><span>{{booking.appointment_slots.notes}}</span>
+                </div>
+                <div>
+                    {%set user = booking.creator()%}
+                    <span><b>Booked by:&nbsp;</b></span><span>{{user.first_name}} {{user.last_name}}</span>
+                </div>
+                <div>
+                    <span><b>Booked on:&nbsp;</b></span><span>{{booking.booking_time | show_dateformat('%B %d, %Y')}}
+                        {{booking.booking_time | show_timeformat()}}</span>
+                </div>
+                <div>
+                    <span><b>Status:&nbsp;</b></span><span id="status">{{booking.status.capitalize()}}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3 w-100">
+                    <span><b>Load Planned:&nbsp;</b></span><span class="me-auto"
+                        id="plannedBool">{{booking.is_load_planned}}</span>
+                    {%if g.user.roles[0] == 'Hub_Manager' or g.user.roles[0] == 'Planning_Team'%}
+                    {%if not booking.is_load_planned%}
+                    <span class="aligh-self-end">
+                        <button class="btn btn-sm btn-success" id="planned">Load Planned</button>
+                    </span>
+                    {%endif%}
+                    {%endif%}
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3 w-100">
+                    <span><b>Load Completed:&nbsp;</b></span><span class="me-auto"
+                        id="completeBool">{{booking.is_complete}}</span>
+                    {%if not booking.is_complete%}
+                    <span>
+                        <button class="btn btn-sm btn-success" id="complete">Load Complete</button>
+                    </span>
+                    {%endif%}
+
+
+                </div>
+
+                {%if booking.status == 'scheduled'%}
+                <div id="cancelDiv">
+                    <div class="w-100 text-center mt-3">Cancel Appointment</div>
+                    <div class="w-100 text-center">
+                        <button class="btn btn-danger btn-block" id="cancel">Cancel</button>
+                    </div>
+
+                </div>
+                {%endif%}
+
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md- ">
+            <div class="container info-div" id="trip-info">
+                <h4 class="text-center mb-3 mt-2 header">Trip Information:</h4>
+                <div class="w-100 text-center" id="load-msg">
+                    <small>Not displayed for delivery only loads.</small>
+                </div>
+                <div id="map-origin-name" class="d-none">
+                    <span><b>Origin:&nbsp;</b></span><span
+                        class="ml-2">{{booking.appointment_slots.location.name}}</span>
+                </div>
+                <div id="map-destination-name" class="d-none">
+                    <span><b>Destination:&nbsp;</b></span><span class="ml-2"
+                        id="map-dest">{{booking.delivery_name().name}}</span>
+                </div>
+                <div id="trip-miles" class="d-none">
+                    <span><b>Mileage:&nbsp;</b></span><span class="ml-2 " id="map-miles"></span>
+                </div>
+                <div id="travel-time" class="d-none">
+                    <span><b>Travel time:&nbsp;</b></span><span class="ml-2 " id="map-travel"></span>
+                </div>
+                <div id="map" class="d-none mt-2">
+                </div>
+                <div class="text-center w-100 d-none" id="bing-eula"><small>
+                        Truck route data provided by Microsoft &copy; <a
+                            href="https://www.microsoft.com/en-us/maps/bing-maps/product/enduserterms">Bing
+                            Maps.</a></small></div>
+                <div class="d-none" id="truck-settings">
+                    Truck route vehicle settings:
+                    <ul>
+                        <li>Vehicle: Single trailer Semi</li>
+                        <li>Height: 14ft</li>
+                        <li>Weight: 80,000lbs</li>
+                        <li>Length: 80ft</li>
+                        <li>Axles: 5</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script src="/static/js/booking_detail.js"></script>
+{%endblock%}

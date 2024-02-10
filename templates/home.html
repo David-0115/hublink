@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Home
+{%endblock%}
+
+{%block content%}
+<ul>
+    <li>{{user.id}}</li>
+    <li>{{user.email}}</li>
+    <li>{{user.first_name}}</li>
+    <li>{{user.last_name}}</li>
+    <li>{{user.active}}</li>
+    <li>{{user.created_at}}</li>
+    <li>{{user.updated_at}}</li>
+    <li>{{user.roles[0].name}}</li>
+    <li>{{user.bookings}}</li>
+    <li>{{user.company[0].name}}</li>
+</ul>
+
+<form method="POST" action="/signout">
+    <button>Sign out</button>
+</form>
+{%endblock%}

@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+
+{%block title%}
+User Registration
+{%endblock%}
+
+{%block content%}
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <div class="col-">
+        </div>
+        <div class="col-6 w-100">
+            <div class="hublink-form mt-3">
+                <div class="text-center form-header-div">
+                    <h3 class="pb-1">Sign up:</h3>
+                </div>
+                <div class="w-100">
+                    <form method="POST" id="register_form">
+                        {{ form.hidden_tag() }}
+                        {% for field in form if field.widget.input_type != 'hidden' %}
+                        {% for error in field.errors%}
+                        <span class="text-danger">{{error}}</span>
+                        {%endfor%}
+                        <div class="container w-100 mt-2">
+                            {{field.label}}
+                            {{field(class="form-control" )}}
+                        </div>
+                        {%endfor%}
+                        <div class="d-flex justify-content-center mt-2 mb-2">
+                            <button class="btn btn-primary btn-block, btn-lg">Sign up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-"></div>
+</div>
+</div>
+{%endblock%}
