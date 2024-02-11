@@ -11,8 +11,12 @@ These hub locations manage a heavy volume of inbound and outbound shipments, hav
 Hublink enables appointment management for all phases of the hub network.
 
 Note: All data for the examples below are fictional for application example purposes only.
-A working example is available at [Hublink]
-To seed the database with new appointment times click here [Hublink/seed]
+
+A working example is available at [Hublink](https://hublink.onrender.com/).
+
+Please use [Register](https://hublink.onrender.com/register) to create an account.
+
+To seed the database with new appointment times click here [Hublink/seed](https://hublink.onrender.com/seed).
 
 Current user role implementation:
 - **Planner** - Plans the shipments for the scheduled appointments.
