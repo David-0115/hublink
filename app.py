@@ -203,7 +203,7 @@ def book_appointment(loc_id, apt_id):
         confirmation = book_appointments(form, appointment)
 
         if confirmation['type'] != 'warning':
-            flash(f'{confirmation['message']}', confirmation['type'])
+            flash(f'{confirmation["message"]}', confirmation['type'])
             return redirect(url_for('home'))
 
         else:
