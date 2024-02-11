@@ -6,10 +6,8 @@ from flask import (
     Flask,
     render_template,
     redirect,
-    session,
     flash,
     url_for,
-    request,
     g,
     jsonify
 )
@@ -73,11 +71,10 @@ app.config["SESSION_COOKIE_SAMESITE"] = "strict"
 app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY")
 app.config["SECURITY_PASSWORD_HASH"] = 'bcrypt'
 app.config["SECURITY_PASSWORD_SALT"] = os.environ.get("PASSWORD_SALT")
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://mktuxilm:7q4YLdsCeBddl-Bz_y45LXs60pCajuGu@lallah.db.elephantsql.com/mktuxilm"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://mktuxilm:7q4YLdsCeBddl-Bz_y45LXs60pCajuGu@lallah.db.elephantsql.com/mktuxilm"
 app.config["SQLALCHEMY_ECHO"] = False
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True, }
-# app.config["SECURITY_LOGIN_URL"] = '/signin'
 
 
 connect_db(app)

@@ -34,7 +34,7 @@ from flask_security import (
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 import requests
-from keys import geocode_API_key, bing_API_key
+import os
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 
 
@@ -273,7 +273,7 @@ def get_trip_info(loc1_id, loc2_id, slot_id):
     slot = Appointment_Slot.query.get_or_404(slot_id)
 
     url = f"https://dev.virtualearth.net/REST/v1/Routes/Truck?key={
-        bing_API_key}"
+        os.environ.get('bing_API_key')}"
 
     req_data = {
         "waypoints": [{
