@@ -207,7 +207,7 @@ def book_appointment(loc_id, apt_id):
             return redirect(url_for('home'))
 
         else:
-            flash(f'{confirmation['message']}', confirmation['type'])
+            flash(f'{confirmation["message"]}', confirmation['type'])
             return render_template('cal.html', alt_apt=confirmation['appointments'])
 
     return render_template('book.html', form=form, slot=appointment)
