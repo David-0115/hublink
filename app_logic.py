@@ -264,12 +264,12 @@ def get_trip_info(loc1_id, loc2_id, slot_id):
     """
     loc1 = Location.query.get_or_404(loc1_id)
     info1 = loc1.get_contact_info()
-    address1 = f'{info1.street_address} {
-        info1.city} {info1.state} {info1.zip_code}'
+    address1 = f'{info1.street_address}'
+    f'{info1.city} {info1.state} {info1.zip_code}'
     loc2 = Location.query.get_or_404(loc2_id)
     info2 = loc2.get_contact_info()
-    address2 = f'{info2.street_address} {
-        info2.city} {info2.state} {info2.zip_code}'
+    address2 = f'{info2.street_address}'
+    f'{info2.city} {info2.state} {info2.zip_code}'
     slot = Appointment_Slot.query.get_or_404(slot_id)
 
     url = f"https://dev.virtualearth.net/REST/v1/Routes/Truck?key={
