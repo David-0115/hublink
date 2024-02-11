@@ -272,8 +272,8 @@ def get_trip_info(loc1_id, loc2_id, slot_id):
     f'{info2.city} {info2.state} {info2.zip_code}'
     slot = Appointment_Slot.query.get_or_404(slot_id)
 
-    url = f"https://dev.virtualearth.net/REST/v1/Routes/Truck?key={
-        os.environ.get('bing_API_key')}"
+    api_key = os.environ.get('bing_API_key')
+    url = f"https://dev.virtualearth.net/REST/v1/Routes/Truck?key={api_key}"
 
     req_data = {
         "waypoints": [{
