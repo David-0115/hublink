@@ -420,9 +420,9 @@ def book_appointments(form, appointment):
                 start_time = utc_to_local(
                     valid_appointment.start_time, loc_data.time_zone)
                 format = '%m-%d-%Y %H:%M %p'
+                loc = valid_appointment.location.name
                 msg = dict(
-                    message=f'Your appointment at {
-                        valid_appointment.location.name} for'
+                    message=f'Your appointment at {loc} for'
                     f'{start_time.strftime(format)} is scheduled. ',
                     type='success'
                 )
