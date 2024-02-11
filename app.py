@@ -124,7 +124,9 @@ def register():
 
     if form.validate_on_submit():
         new_user = create_user(form)
+
         if isinstance(new_user, User):
+            flash(f'Your account was successfully created', "success")
             return redirect(url_for('home'))
         else:
             flash(new_user, "danger")

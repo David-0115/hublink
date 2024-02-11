@@ -110,11 +110,12 @@ def create_user(form):
         db.session.commit()
 
         # Attempt to log in the user
-        return login_user(user=user)
+        login_user(user=user)
+        return user
 
     except IntegrityError:
         db.session.rollback()
-        return "An integrity error occurred. The user might already exist."
+        return "Error: A user with that email address already exists."
     except ValueError as e:
         db.session.rollback()
         return str(e)
