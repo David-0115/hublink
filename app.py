@@ -57,7 +57,8 @@ from app_logic import (
     get_trip_info,
     utc_to_local,
     set_form_choices,
-    book_appointments
+    book_appointments,
+    seed
 
 )
 
@@ -363,29 +364,9 @@ def get_driver_id():
 @app.route('/seed')
 @signin_required
 def load():
-    from faker import Faker
-    from datetime import datetime, timedelta
-    fake = Faker()
-    count = 0
-    try:
-        for i in range(1, 11):
-            # Assuming each location has a fixed number of slots per day
-            for _ in range(5):  # 5 slots per day as an example
-                start_time = fake.date_time_between(
-                    start_date=datetime.utcnow(), end_date='+7d')
-                start_time = start_time.replace(
-                    minute=0, second=0, microsecond=0)
-                end_time = start_time + timedelta(hours=2)
-                slot = Appointment_Slot(
-                    location_id=i, start_time=start_time, end_time=end_time, is_booked=False)
-                db.session.add(slot)
-                count += 1
-        db.session.commit()
-        flash(f'{count} Appointments created', 'success')
-    except Exception as e:
-        db.session.rollback()
-        flash(f'Error: {e}', 'danger')
 
+    msg = seed()
+    flash(msg)
     return redirect(url_for('home'))
 # template filters
 
@@ -400,3 +381,15 @@ def show_dateformat(value, format='%Y-%m-%d'):
 @app.template_filter()
 def show_timeformat(value, format='%I:%M %p'):
     return value.strftime(format)
+
+# guest-access
+
+
+@app.route('/guest-access')
+def guest_access():
+    user = User.query.get(22)
+    login_user(user=user)
+    seed()
+    seed()
+
+    return redirect('/')

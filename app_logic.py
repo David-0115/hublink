@@ -457,5 +457,30 @@ def book_appointments(form, appointment):
         print(msg)
         return msg
 
+
+def seed():
+    from faker import Faker
+    from datetime import datetime, timedelta
+    fake = Faker()
+    count = 0
+    try:
+        for i in range(1, 11):
+            # Assuming each location has a fixed number of slots per day
+            for _ in range(5):  # 5 slots per day as an example
+                start_time = fake.date_time_between(
+                    start_date=datetime.utcnow(), end_date='+7d')
+                start_time = start_time.replace(
+                    minute=0, second=0, microsecond=0)
+                end_time = start_time + timedelta(hours=2)
+                slot = Appointment_Slot(
+                    location_id=i, start_time=start_time, end_time=end_time, is_booked=False)
+                db.session.add(slot)
+                count += 1
+        db.session.commit()
+        return f'{count} Appointments created', 'success'
+    except Exception as e:
+        db.session.rollback()
+        return f'Error: {e}', 'danger'
+
 # TODO: create the function for converting address to coords
 # https://learn.microsoft.com/en-us/bingmaps/rest-services/locations/find-a-location-by-address
