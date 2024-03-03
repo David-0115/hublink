@@ -391,5 +391,5 @@ def guest_access():
     login_user(user=user)
     seed()
     seed()
-
+    flash('Welcome to Hublink, note all user and company data is fictional for demonstration purposes only.', 'success')
     return redirect('/')
